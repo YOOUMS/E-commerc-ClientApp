@@ -13,7 +13,8 @@ class ProductWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(right: 34.h),
+      margin: EdgeInsets.only(left: 50.w),
+      // color: Colors.red,
       height: 350.h,
       width: 220.w,
       child: Column(
@@ -21,8 +22,9 @@ class ProductWidget extends StatelessWidget {
         children: [
           Stack(
             children: [
-              Positioned(
+              Align(
                 child: Container(
+                  margin: EdgeInsets.only(top: 50.h),
                   width: 220.w,
                   height: 270.h,
                   decoration: BoxDecoration(
@@ -32,7 +34,7 @@ class ProductWidget extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         SizedBox(
-                          height: 39.h,
+                          height: 160.h,
                         ),
                         Text(
                           product.name,
@@ -65,19 +67,17 @@ class ProductWidget extends StatelessWidget {
                       ]),
                 ),
               ),
-              Positioned(
-                child: Align(
-                  alignment: Alignment.topCenter,
-                  child: Container(
-                    margin: EdgeInsets.only(top: 160.h),
-                    width: 157.w,
-                    height: 157.h,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(100.r),
-                        image: DecorationImage(
-                            image: AssetImage(product.imagePath),
-                            fit: BoxFit.cover)),
-                  ),
+              Align(
+                alignment: Alignment.topCenter,
+                child: Container(
+                  // margin: EdgeInsets.only(top: 160.h),
+                  width: 157.w,
+                  height: 157.h,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(100.r),
+                      image: DecorationImage(
+                          image: AssetImage(product.imagePath),
+                          fit: BoxFit.cover)),
                 ),
               )
             ],

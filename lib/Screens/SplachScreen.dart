@@ -1,10 +1,18 @@
+import 'package:e_commerce_app/AppRouter/AppRouter.dart';
+import 'package:e_commerce_app/providers/DBprovider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class SplachScreen extends StatelessWidget {
+  CheckUser() {
+    Provider.of<DBprovider>(AppRouter.navKey.currentContext!, listen: false)
+        .checkUser();
+  }
+
   const SplachScreen({Key? key}) : super(key: key);
 
   @override
@@ -47,7 +55,7 @@ class SplachScreen extends StatelessWidget {
           height: 39.h,
         ),
         InkWell(
-          onTap: null,
+          onTap: () => CheckUser(),
           child: Container(
               width: 314.w,
               height: 70.h,

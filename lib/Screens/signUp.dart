@@ -1,6 +1,7 @@
 import 'package:e_commerce_app/AppRouter/AppRouter.dart';
-import 'package:e_commerce_app/Screens/signUp.dart';
+import 'package:e_commerce_app/Screens/LoginScreen.dart';
 import 'package:e_commerce_app/providers/DBprovider.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -8,8 +9,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class SignUpScreen extends StatelessWidget {
+  const SignUpScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +24,7 @@ class LoginScreen extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 50.w),
                 child: Text(
-                  "Welcome back",
+                  "Create account",
                   style: GoogleFonts.raleway(
                       textStyle: TextStyle(
                           fontSize: 65.sp,
@@ -50,7 +51,7 @@ class LoginScreen extends StatelessWidget {
                       Align(
                         alignment: Alignment.topLeft,
                         child: Text(
-                          "Login",
+                          "Sign up",
                           style: TextStyle(
                               fontSize: 18.sp, fontWeight: FontWeight.bold),
                         ),
@@ -69,7 +70,7 @@ class LoginScreen extends StatelessWidget {
                       ),
                       TextFormField(
                         controller: Provider.of<DBprovider>(context)
-                            .emailControllerLogin,
+                            .emailControllerSignup,
                         keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(
                             contentPadding: EdgeInsets.zero, isDense: true),
@@ -88,7 +89,7 @@ class LoginScreen extends StatelessWidget {
                       ),
                       TextFormField(
                         controller: Provider.of<DBprovider>(context)
-                            .passwordControllerLogin,
+                            .passwordControllerSignup,
                         keyboardType: TextInputType.text,
                         obscureText: true,
                         decoration: InputDecoration(
@@ -97,8 +98,9 @@ class LoginScreen extends StatelessWidget {
                       Align(
                           alignment: Alignment.topLeft,
                           child: TextButton(
-                              onPressed: null,
-                              child: Text("Forgot passcode?",
+                              onPressed: () =>
+                                  AppRouter.pushWithReplacment(LoginScreen()),
+                              child: Text("already have account?",
                                   style: GoogleFonts.raleway(
                                     fontWeight: FontWeight.bold,
                                     textStyle: TextStyle(
@@ -111,7 +113,7 @@ class LoginScreen extends StatelessWidget {
                       InkWell(
                         onTap: () =>
                             Provider.of<DBprovider>(context, listen: false)
-                                .signIn(),
+                                .signUp(),
                         child: Container(
                             width: 314.w,
                             height: 70.h,
@@ -121,23 +123,13 @@ class LoginScreen extends StatelessWidget {
                             child: Align(
                                 alignment: Alignment.center,
                                 child: Text(
-                                  "Login",
+                                  "Sign Up",
                                   style: TextStyle(
                                       fontSize: 20.sp,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white),
                                 ))),
                       ),
-                      TextButton(
-                          onPressed: () =>
-                              AppRouter.pushWithReplacment(SignUpScreen()),
-                          child: Text("Create account",
-                              style: GoogleFonts.raleway(
-                                textStyle: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Color.fromARGB(255, 89, 86, 233),
-                                    fontSize: 17.sp),
-                              )))
                     ]),
                   ),
                 ),
