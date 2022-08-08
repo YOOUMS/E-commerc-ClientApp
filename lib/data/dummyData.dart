@@ -17,3 +17,4 @@ List<Product> products = [
       imagePath: 'assets/products/p3.jpg',
       price: 359),
 ];
+List<Product> Favorites = [];

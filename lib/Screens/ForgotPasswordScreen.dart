@@ -1,16 +1,14 @@
 import 'package:e_commerce_app/AppRouter/AppRouter.dart';
-import 'package:e_commerce_app/Screens/ForgotPasswordScreen.dart';
 import 'package:e_commerce_app/Screens/signUp.dart';
-import 'package:e_commerce_app/providers/DBprovider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+import '../providers/DBprovider.dart';
+
+class ForgotPasswordScreen extends StatelessWidget {
+  const ForgotPasswordScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +22,7 @@ class LoginScreen extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 50.w),
                 child: Text(
-                  "Welcome back",
+                  "Forgot password",
                   style: GoogleFonts.raleway(
                       textStyle: TextStyle(
                           fontSize: 65.sp,
@@ -51,7 +49,7 @@ class LoginScreen extends StatelessWidget {
                       Align(
                         alignment: Alignment.topLeft,
                         child: Text(
-                          "Login",
+                          "Reset Password",
                           style: TextStyle(
                               fontSize: 18.sp, fontWeight: FontWeight.bold),
                         ),
@@ -78,42 +76,10 @@ class LoginScreen extends StatelessWidget {
                       SizedBox(
                         height: 44.sp,
                       ),
-                      Row(
-                        children: [
-                          Image.asset('assets/Lock.png'),
-                          SizedBox(
-                            width: 20.w,
-                          ),
-                          Text("Password")
-                        ],
-                      ),
-                      TextFormField(
-                        controller: Provider.of<DBprovider>(context)
-                            .passwordControllerLogin,
-                        keyboardType: TextInputType.text,
-                        obscureText: true,
-                        decoration: InputDecoration(
-                            contentPadding: EdgeInsets.zero, isDense: true),
-                      ),
-                      Align(
-                          alignment: Alignment.topLeft,
-                          child: TextButton(
-                              onPressed: () => AppRouter.pushWithReplacment(
-                                  ForgotPasswordScreen()),
-                              child: Text("Forgot passcode?",
-                                  style: GoogleFonts.raleway(
-                                    fontWeight: FontWeight.bold,
-                                    textStyle: TextStyle(
-                                        color: Color.fromARGB(255, 89, 86, 233),
-                                        fontSize: 15.sp),
-                                  )))),
-                      SizedBox(
-                        height: 44.sp,
-                      ),
                       InkWell(
                         onTap: () =>
                             Provider.of<DBprovider>(context, listen: false)
-                                .signIn(),
+                                .resetPassword(),
                         child: Container(
                             width: 314.w,
                             height: 70.h,
@@ -123,23 +89,13 @@ class LoginScreen extends StatelessWidget {
                             child: Align(
                                 alignment: Alignment.center,
                                 child: Text(
-                                  "Login",
+                                  "Reset",
                                   style: TextStyle(
                                       fontSize: 20.sp,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white),
                                 ))),
                       ),
-                      TextButton(
-                          onPressed: () =>
-                              AppRouter.pushWithReplacment(SignUpScreen()),
-                          child: Text("Create account",
-                              style: GoogleFonts.raleway(
-                                textStyle: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Color.fromARGB(255, 89, 86, 233),
-                                    fontSize: 17.sp),
-                              )))
                     ]),
                   ),
                 ),

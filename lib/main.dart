@@ -42,6 +42,10 @@ class MyApp extends StatelessWidget {
         splitScreenMode: true,
         builder: (context, child) {
           return MaterialApp(
+            theme: ThemeData(
+                appBarTheme:
+                    AppBarTheme(iconTheme: IconThemeData(color: Colors.black))),
+            debugShowCheckedModeBanner: false,
             navigatorKey: AppRouter.navKey,
             home: Provider.of<DBprovider>(context).checkAppUser(),
           );

@@ -1,3 +1,7 @@
+import 'package:e_commerce_app/AppRouter/AppRouter.dart';
+import 'package:e_commerce_app/Screens/FavoritesScreen.dart';
+import 'package:e_commerce_app/Screens/OrderHistory.dart';
+import 'package:e_commerce_app/Screens/ProfileScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -25,6 +29,9 @@ class DrawerScreen extends StatelessWidget {
               accountName: Text(""),
             ),
             ListTile(
+              onTap: () {
+                AppRouter.pushWidget(ProfileScreen());
+              },
               leading: Icon(
                 Icons.perm_identity_rounded,
                 size: 24,
@@ -51,6 +58,7 @@ class DrawerScreen extends StatelessWidget {
               ),
             ),
             ListTile(
+              onTap: () => AppRouter.pushWidget(OrderHistory()),
               leading: Icon(
                 Icons.shopping_bag_outlined,
                 size: 24,
@@ -77,6 +85,7 @@ class DrawerScreen extends StatelessWidget {
               ),
             ),
             ListTile(
+              onTap: () => AppRouter.pushWidget(FavoritesScreen()),
               leading: Icon(Icons.favorite_outline_rounded,
                   size: 24, color: Colors.white),
               title: Align(

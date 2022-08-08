@@ -48,4 +48,8 @@ class DBhelper {
     User? user = await FirebaseAuth.instance.currentUser;
     return user;
   }
+
+  resetPassword(String email) async {
+    await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+  }
 }

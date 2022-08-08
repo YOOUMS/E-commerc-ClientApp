@@ -13,12 +13,19 @@ class DBprovider extends ChangeNotifier {
   TextEditingController emailControllerSignup = TextEditingController();
   TextEditingController passwordControllerSignup = TextEditingController();
   User? user;
+  DBprovider() {
+    fillUser();
+  }
+  fillUser() async {
+    this.user = await DBhelper.instance.CheckUser();
+    notifyListeners();
+  }
 
   signIn() async {
-    DBhelper.instance
+    await DBhelper.instance
         .signIn(emailControllerLogin.text, passwordControllerLogin.text);
-    user = await DBhelper.instance.CheckUser();
-    print(user!.email);
+    this.user = await DBhelper.instance.CheckUser();
+
     notifyListeners();
   }
 
@@ -37,7 +44,6 @@ class DBprovider extends ChangeNotifier {
       AppRouter.pushWithReplacment(LoginScreen());
     else
       AppRouter.pushWithReplacment(HomePage());
-    notifyListeners();
   }
 
   getUser() async {
@@ -46,10 +52,16 @@ class DBprovider extends ChangeNotifier {
 
   checkAppUser() {
     bool? res = SPHelper.readNewUser();
+    print(res);
     if (res == null) {
       SPHelper.newUserToOldUser();
       return SplachScreen();
     }
-    return getUser() == null ? LoginScreen() : HomePage();
+    return user == null ? LoginScreen() : HomePage();
+  }
+
+  resetPassword() async {
+    await DBhelper.instance.resetPassword(emailControllerLogin.text);
+    AppRouter.pushWithReplacment(LoginScreen());
   }
 }

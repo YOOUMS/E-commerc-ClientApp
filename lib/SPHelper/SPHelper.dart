@@ -11,6 +11,6 @@ class SPHelper {
   }
 
   static bool? readNewUser() {
-    return sp!.getBool('oldUser');
+    return sp!.getBool('olduser');
   }
 }

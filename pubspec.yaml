@@ -68,9 +68,14 @@ flutter:
    - assets/Email.png
    - assets/Lock.png
    - assets/Drawer.png
+   - assets/search.png
+   - assets/EmptyFavorites.png
+   - assets/EmptyOrderHistory.png
+   - assets/products/ProductBasket.png
    - assets/products/p1.jpg
    - assets/products/p2.jpg
    - assets/products/p3.jpg
+   - assets/user.jpg
    
 
 
