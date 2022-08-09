@@ -40,7 +40,7 @@ class SignUpScreen extends StatelessWidget {
                   padding:
                       EdgeInsets.symmetric(horizontal: 50.w, vertical: 36.h),
                   width: 414.w,
-                  height: 590.h,
+                  height: 600.h,
                   decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.only(
@@ -95,6 +95,49 @@ class SignUpScreen extends StatelessWidget {
                         decoration: InputDecoration(
                             contentPadding: EdgeInsets.zero, isDense: true),
                       ),
+                      SizedBox(
+                        height: 44.h,
+                      ),
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.perm_identity_outlined,
+                            color: Color.fromARGB(255, 134, 134, 134),
+                          ),
+                          SizedBox(
+                            width: 20.w,
+                          ),
+                          Text("User Name")
+                        ],
+                      ),
+                      TextFormField(
+                        controller: Provider.of<DBprovider>(context)
+                            .userNameControllerSignup,
+                        decoration: InputDecoration(
+                            contentPadding: EdgeInsets.zero, isDense: true),
+                      ),
+                      SizedBox(
+                        height: 44.sp,
+                      ),
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.phone_android_outlined,
+                            color: Color.fromARGB(255, 134, 134, 134),
+                          ),
+                          SizedBox(
+                            width: 20.w,
+                          ),
+                          Text("Phone")
+                        ],
+                      ),
+                      TextFormField(
+                        controller: Provider.of<DBprovider>(context)
+                            .phoneControllerSignup,
+                        keyboardType: TextInputType.emailAddress,
+                        decoration: InputDecoration(
+                            contentPadding: EdgeInsets.zero, isDense: true),
+                      ),
                       Align(
                           alignment: Alignment.topLeft,
                           child: TextButton(
@@ -108,7 +151,7 @@ class SignUpScreen extends StatelessWidget {
                                         fontSize: 15.sp),
                                   )))),
                       SizedBox(
-                        height: 44.sp,
+                        height: 0.h,
                       ),
                       InkWell(
                         onTap: () =>

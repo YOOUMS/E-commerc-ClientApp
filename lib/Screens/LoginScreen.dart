@@ -73,7 +73,9 @@ class LoginScreen extends StatelessWidget {
                             .emailControllerLogin,
                         keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(
-                            contentPadding: EdgeInsets.zero, isDense: true),
+                            contentPadding:
+                                EdgeInsets.symmetric(vertical: 10.h),
+                            isDense: true),
                       ),
                       SizedBox(
                         height: 44.sp,
@@ -93,13 +95,15 @@ class LoginScreen extends StatelessWidget {
                         keyboardType: TextInputType.text,
                         obscureText: true,
                         decoration: InputDecoration(
-                            contentPadding: EdgeInsets.zero, isDense: true),
+                            contentPadding:
+                                EdgeInsets.symmetric(vertical: 10.h),
+                            isDense: true),
                       ),
                       Align(
                           alignment: Alignment.topLeft,
                           child: TextButton(
-                              onPressed: () => AppRouter.pushWithReplacment(
-                                  ForgotPasswordScreen()),
+                              onPressed: () =>
+                                  AppRouter.pushWidget(ForgotPasswordScreen()),
                               child: Text("Forgot passcode?",
                                   style: GoogleFonts.raleway(
                                     fontWeight: FontWeight.bold,

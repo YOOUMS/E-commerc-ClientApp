@@ -12,7 +12,7 @@ class DBhelper {
     try {
       UserCredential userCredential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
-
+      return userCredential;
       AppRouter.pushWithReplacment(LoginScreen());
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
@@ -51,5 +51,9 @@ class DBhelper {
 
   resetPassword(String email) async {
     await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+  }
+
+  getCurrentUserId() async {
+    return await FirebaseAuth.instance.currentUser!.uid;
   }
 }

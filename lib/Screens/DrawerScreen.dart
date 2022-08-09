@@ -26,7 +26,8 @@ class DrawerScreen extends StatelessWidget {
                 child: Icon(Icons.perm_identity),
               ),
               accountEmail: Text(Provider.of<DBprovider>(context).user!.email!),
-              accountName: Text(""),
+              accountName:
+                  Text(Provider.of<DBprovider>(context).user!.userName!),
             ),
             ListTile(
               onTap: () {
