@@ -1,6 +1,7 @@
 import 'package:e_commerce_app/AppRouter/AppRouter.dart';
 import 'package:e_commerce_app/Screens/HomePage.dart';
 import 'package:e_commerce_app/Screens/LoginScreen.dart';
+import 'package:e_commerce_app/model/User.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class DBhelper {
@@ -46,6 +47,7 @@ class DBhelper {
 
   CheckUser() async {
     User? user = await FirebaseAuth.instance.currentUser;
+
     return user;
   }
 

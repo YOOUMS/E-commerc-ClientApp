@@ -2,7 +2,9 @@ import 'package:e_commerce_app/AppRouter/AppRouter.dart';
 import 'package:e_commerce_app/Screens/HomePage.dart';
 import 'package:e_commerce_app/Screens/LoginScreen.dart';
 import 'package:e_commerce_app/Screens/SplachScreen.dart';
+import 'package:e_commerce_app/providers/methodProvider.dart';
 import 'package:e_commerce_app/providers/DBprovider.dart';
+import 'package:e_commerce_app/providers/FireStoreProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -26,8 +28,15 @@ class ProviderApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<DBprovider>(
-        create: (context) => DBprovider(), child: MyApp());
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<DBprovider>(create: (context) => DBprovider()),
+        ChangeNotifierProvider<FireStoreProvider>(
+            create: (context) => FireStoreProvider()),
+        Provider(create: (context) => MethodProvider())
+      ],
+      child: MyApp(),
+    );
   }
 }
 

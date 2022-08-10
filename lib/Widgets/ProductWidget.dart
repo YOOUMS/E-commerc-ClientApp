@@ -15,7 +15,9 @@ class ProductWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => AppRouter.pushWidget(ProductPage()),
+      onTap: () => AppRouter.pushWidget(ProductPage(
+        product: product,
+      )),
       child: Container(
         margin: EdgeInsets.only(left: 50.w),
         // color: Colors.red,
@@ -28,6 +30,7 @@ class ProductWidget extends StatelessWidget {
               children: [
                 Align(
                   child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 10.w),
                     margin: EdgeInsets.only(top: 50.h),
                     width: 220.w,
                     height: 270.h,
@@ -50,12 +53,17 @@ class ProductWidget extends StatelessWidget {
                           SizedBox(
                             height: 9.h,
                           ),
-                          Text(
-                            product.descraption,
-                            style: GoogleFonts.raleway(
-                                textStyle: TextStyle(
-                                    color: Color.fromARGB(255, 134, 134, 134),
-                                    fontSize: 16.sp)),
+                          SizedBox(
+                            width: double.infinity,
+                            child: Text(
+                              product.descraption,
+                              style: GoogleFonts.raleway(
+                                  textStyle: TextStyle(
+                                      color: Color.fromARGB(255, 134, 134, 134),
+                                      fontSize: 16.sp)),
+                              textAlign: TextAlign.center,
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
                           SizedBox(
                             height: 15.h,

@@ -22,7 +22,9 @@ class DBprovider extends ChangeNotifier {
     fillUser();
   }
   fillUser() async {
-    this.user = await DBhelper.instance.CheckUser();
+    var uid2 = await DBhelper.instance.getCurrentUserId();
+    this.user = await FireStoreHelper.instence.readUserFromFireBase(uid2);
+    FireStoreHelper.instence.readCategoryProducts("NyC9FBzbJ34VeseCJLhj");
     notifyListeners();
   }
 
@@ -32,8 +34,6 @@ class DBprovider extends ChangeNotifier {
 
     var uid2 = await DBhelper.instance.getCurrentUserId();
     this.user = await FireStoreHelper.instence.readUserFromFireBase(uid2);
-
-    print(user);
 
     notifyListeners();
   }
@@ -78,5 +78,9 @@ class DBprovider extends ChangeNotifier {
   resetPassword() async {
     await DBhelper.instance.resetPassword(emailControllerLogin.text);
     AppRouter.pushWithReplacment(LoginScreen());
+  }
+
+  getUserId() async {
+    return await DBhelper.instance.getCurrentUserId();
   }
 }

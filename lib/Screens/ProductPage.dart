@@ -1,5 +1,8 @@
 import 'package:e_commerce_app/Screens/ForgotPasswordScreen.dart';
 import 'package:e_commerce_app/Screens/signUp.dart';
+import 'package:e_commerce_app/model/Product.dart';
+import 'package:e_commerce_app/providers/FireStoreProvider.dart';
+import 'package:e_commerce_app/providers/methodProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -11,7 +14,8 @@ import '../AppRouter/AppRouter.dart';
 import '../providers/DBprovider.dart';
 
 class ProductPage extends StatelessWidget {
-  const ProductPage({Key? key}) : super(key: key);
+  Product product;
+  ProductPage({Key? key, required this.product}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +25,20 @@ class ProductPage extends StatelessWidget {
           backgroundColor: Color.fromARGB(255, 229, 229, 229),
           actions: [
             IconButton(
-                onPressed: null, icon: Icon(Icons.favorite_border_rounded))
+              onPressed: () {
+                Provider.of<MethodProvider>(context, listen: false)
+                        .CheckFavoriteState(product.id!)
+                    ? Provider.of<FireStoreProvider>(context, listen: false)
+                        .removeFromFavorites(product.id!)
+                    : Provider.of<FireStoreProvider>(context, listen: false)
+                        .addProductToFavorites(product.id!);
+              },
+              icon: Icon(Icons.favorite_border_rounded),
+              color: Provider.of<MethodProvider>(context)
+                      .CheckFavoriteState(product.id!)
+                  ? Colors.red
+                  : Colors.black,
+            )
           ],
         ),
         resizeToAvoidBottomInset: false,
@@ -85,7 +102,7 @@ class ProductPage extends StatelessWidget {
                       SizedBox(
                           width: double.infinity,
                           child: Text(
-                            "2020 Apple ipad Air 10.9\"",
+                            "${product.name}",
                             style: GoogleFonts.raleway(
                                 textStyle: TextStyle(
                                     fontSize: 28.sp,
@@ -103,10 +120,14 @@ class ProductPage extends StatelessWidget {
                                     TextStyle(fontWeight: FontWeight.bold)),
                           )),
                       Divider(),
-                      Text(
-                        "Available when you purchase any new iPhone, iPad, iPod Touch, Mac or Apple TV, £4.99/month after free trial.",
-                        style: GoogleFonts.raleway(
-                            textStyle: TextStyle(fontSize: 15.sp)),
+                      SizedBox(
+                        width: double.infinity,
+                        child: Text(
+                          "${product.descraption}",
+                          style: GoogleFonts.raleway(
+                              textStyle: TextStyle(fontSize: 15.sp)),
+                          textAlign: TextAlign.left,
+                        ),
                       ),
                       Spacer(),
                       Row(
@@ -117,7 +138,7 @@ class ProductPage extends StatelessWidget {
                           ),
                           Spacer(),
                           Text(
-                            "\$ 579",
+                            "\$ ${product.price}",
                             style: GoogleFonts.raleway(
                                 textStyle: TextStyle(
                                     color: Color.fromARGB(255, 89, 86, 233),

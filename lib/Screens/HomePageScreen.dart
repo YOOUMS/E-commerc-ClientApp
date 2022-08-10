@@ -1,10 +1,13 @@
 import 'package:e_commerce_app/Screens/DrawerScreen.dart';
 import 'package:e_commerce_app/data/dummyData.dart';
+import 'package:e_commerce_app/model/Product.dart';
+import 'package:e_commerce_app/providers/FireStoreProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 import '../Widgets/ProductWidget.dart';
 
@@ -144,9 +147,11 @@ class _HomePageScreenState extends State<HomePageScreen>
             height: 320.h,
             child: ListView.builder(
                 scrollDirection: Axis.horizontal,
-                itemCount: products.length,
-                itemBuilder: (context, index) =>
-                    ProductWidget(product: products[index])),
+                itemCount:
+                    Provider.of<FireStoreProvider>(context).products.length,
+                itemBuilder: (context, index) => ProductWidget(
+                    product: Provider.of<FireStoreProvider>(context)
+                        .products[index])),
           ),
           TextButton(
               onPressed: null,
