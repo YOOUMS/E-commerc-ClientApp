@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/AppRouter/AppRouter.dart';
+import 'package:e_commerce_app/Widgets/ProductInFavorite.dart';
 import 'package:e_commerce_app/model/Product.dart';
 import 'package:e_commerce_app/model/User.dart';
 import 'package:e_commerce_app/providers/DBprovider.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 
@@ -44,6 +46,7 @@ class FireStoreHelper {
     DocumentSnapshot<Map<String, dynamic>> user =
         await FirebaseFirestore.instance.collection('users').doc(userId).get();
     Map<String, dynamic>? userData = user.data();
+    List Favorites = [];
 
     return userData!['favorites'];
   }
@@ -61,5 +64,16 @@ class FireStoreHelper {
         .collection('users')
         .doc(userId)
         .update(user!.toMap());
+  }
+
+  Future<Product> productById(String productId) async {
+    print('--------------- $productId');
+    DocumentSnapshot<Map<String, dynamic>> productData = await FirebaseFirestore
+        .instance
+        .collection('products')
+        .doc(productId)
+        .get();
+
+    return Product.fromMap(productData.data()!);
   }
 }

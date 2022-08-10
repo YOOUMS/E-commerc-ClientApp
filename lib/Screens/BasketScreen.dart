@@ -1,4 +1,4 @@
-import 'package:e_commerce_app/Widgets/ProductInCart.dart';
+import 'package:e_commerce_app/Widgets/ProductInFavorite.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -27,7 +27,7 @@ class BasketScreen extends StatelessWidget {
       backgroundColor: Color.fromARGB(255, 229, 229, 229),
       body: Container(
         padding: EdgeInsets.symmetric(horizontal: 50.w),
-        child: ProuductInCart(),
+        child: null,
       ),
     );
   }

@@ -34,8 +34,8 @@ class ProductPage extends StatelessWidget {
                         .addProductToFavorites(product.id!);
               },
               icon: Icon(Icons.favorite_border_rounded),
-              color: Provider.of<MethodProvider>(context)
-                      .CheckFavoriteState(product.id!)
+              color: Provider.of<FireStoreProvider>(context)
+                      .checkFavorite(product.id!)
                   ? Colors.red
                   : Colors.black,
             )

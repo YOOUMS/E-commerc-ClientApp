@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:e_commerce_app/AppRouter/AppRouter.dart';
 import 'package:e_commerce_app/data/firestore_helper.dart';
 import 'package:e_commerce_app/model/Product.dart';
@@ -8,6 +10,7 @@ import 'package:provider/provider.dart';
 class FireStoreProvider extends ChangeNotifier {
   List<Product> products = [];
   List<dynamic> favorites = [];
+  List<Product> favoriteProdcuts = [];
 
   FireStoreProvider() {
     readProductsCategory('NyC9FBzbJ34VeseCJLhj');
@@ -19,6 +22,7 @@ class FireStoreProvider extends ChangeNotifier {
   }
 
   addProductToFavorites(String productId) async {
+    await FireStoreHelper.instence.productById(productId);
     Provider.of<DBprovider>(AppRouter.navKey.currentContext!, listen: false)
         .user!
         .favorites!
@@ -41,6 +45,19 @@ class FireStoreProvider extends ChangeNotifier {
         await Provider.of<DBprovider>(AppRouter.navKey.currentContext!,
                 listen: false)
             .getUserId());
+    favoriteProdcuts.clear();
+    favorites.forEach((element) async {
+      favoriteProdcuts.add(await ProductById(element));
+    });
+
     notifyListeners();
+  }
+
+  checkFavorite(String productId) {
+    return favorites.contains(productId);
+  }
+
+  ProductById(String productId) async {
+    return await FireStoreHelper.instence.productById(productId);
   }
 }

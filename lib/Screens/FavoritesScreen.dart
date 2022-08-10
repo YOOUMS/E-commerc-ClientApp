@@ -1,10 +1,14 @@
 import 'package:e_commerce_app/Screens/EmptyScreen.dart';
+import 'package:e_commerce_app/Widgets/ProductInFavorite.dart';
 import 'package:e_commerce_app/data/dummyData.dart';
+import 'package:e_commerce_app/model/Product.dart';
+import 'package:e_commerce_app/providers/FireStoreProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class FavoritesScreen extends StatelessWidget {
   const FavoritesScreen({Key? key}) : super(key: key);
@@ -26,7 +30,20 @@ class FavoritesScreen extends StatelessWidget {
         ),
         centerTitle: true,
       ),
-      body: EmptyScreen(),
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 30.w),
+        child: Provider.of<FireStoreProvider>(context).favorites.isEmpty
+            ? EmptyScreen()
+            : ListView.builder(
+                itemCount: Provider.of<FireStoreProvider>(context)
+                    .favoriteProdcuts
+                    .length,
+                itemBuilder: (context, index) {
+                  return ProductInFavorite(
+                      product: Provider.of<FireStoreProvider>(context)
+                          .favoriteProdcuts[index] as Product);
+                }),
+      ),
     );
   }
 }

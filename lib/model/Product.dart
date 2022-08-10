@@ -14,7 +14,7 @@ class Product {
       required this.quantity,
       required this.price});
 
-  Product.fromMap(Map json) {
+  Product.fromMap(Map<String, dynamic> json) {
     this.name = json['name'];
     this.descraption = json['description'];
     this.price = json['price'];
