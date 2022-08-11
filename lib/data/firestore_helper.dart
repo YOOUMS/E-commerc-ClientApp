@@ -1,11 +1,15 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/AppRouter/AppRouter.dart';
 import 'package:e_commerce_app/Widgets/ProductInFavorite.dart';
+import 'package:e_commerce_app/model/Category.dart';
 import 'package:e_commerce_app/model/Product.dart';
 import 'package:e_commerce_app/model/User.dart';
 import 'package:e_commerce_app/providers/DBprovider.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
 
 class FireStoreHelper {
@@ -33,6 +37,7 @@ class FireStoreHelper {
     products.docs.forEach((element) {
       Product productToAdd = Product.fromMap(element.data());
       productToAdd.id = element.id;
+      log(element.id);
       productsList.add(productToAdd);
     });
     return productsList;
@@ -67,13 +72,28 @@ class FireStoreHelper {
   }
 
   Future<Product> productById(String productId) async {
-    print('--------------- $productId');
     DocumentSnapshot<Map<String, dynamic>> productData = await FirebaseFirestore
         .instance
         .collection('products')
         .doc(productId)
         .get();
+    Product product = Product.fromMap(productData.data()!);
+    product.id = productData.id;
+    return product;
+  }
 
-    return Product.fromMap(productData.data()!);
+  getAllCategory() async {
+    QuerySnapshot data =
+        await FirebaseFirestore.instance.collection('category').get();
+    List<QueryDocumentSnapshot> Docs = data.docs;
+
+    List categories = [];
+    categories = Docs.map((e) {
+      AppCategory category = AppCategory.fromMap(e.data() as Map);
+      category.categoryID = e.id;
+      return category;
+    }).toList();
+
+    return categories;
   }
 }

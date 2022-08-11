@@ -1,8 +1,10 @@
+import 'package:e_commerce_app/providers/DBprovider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -45,6 +47,15 @@ class ProfileScreen extends StatelessWidget {
                       width: 315.w,
                       height: 167.h,
                       decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.5),
+                              spreadRadius: 5,
+                              blurRadius: 7,
+                              offset:
+                                  Offset(0, 3), // changes position of shadow
+                            ),
+                          ],
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(20.r)),
                       child: Center(
@@ -53,7 +64,7 @@ class ProfileScreen extends StatelessWidget {
                           height: 63.h,
                         ),
                         Text(
-                          "Rosina Doe",
+                          Provider.of<DBprovider>(context).user!.userName!,
                           style: GoogleFonts.raleway(
                               textStyle: TextStyle(
                                   fontSize: 18.sp,
@@ -70,9 +81,12 @@ class ProfileScreen extends StatelessWidget {
                             ),
                             SizedBox(
                               width: 182.w,
-                              child: Text(
-                                "Address: 43 Oxford Road M12 4GR \nManchester,UK",
-                              ),
+                              child: Text(Provider.of<DBprovider>(context)
+                                          .user!
+                                          .address ==
+                                      null
+                                  ? "No Address Found \n Edit Your Profile"
+                                  : "Address: ${Provider.of<DBprovider>(context).user!.address}"),
                             )
                           ],
                         )
@@ -97,6 +111,14 @@ class ProfileScreen extends StatelessWidget {
                   margin: EdgeInsets.only(top: 20.h),
                   padding: EdgeInsets.symmetric(horizontal: 23.w),
                   decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          spreadRadius: 5,
+                          blurRadius: 7,
+                          offset: Offset(0, 3), // changes position of shadow
+                        ),
+                      ],
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(20.r)),
                   child: Row(children: [
@@ -121,6 +143,14 @@ class ProfileScreen extends StatelessWidget {
                   margin: EdgeInsets.only(top: 20.h),
                   padding: EdgeInsets.symmetric(horizontal: 23.w),
                   decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          spreadRadius: 5,
+                          blurRadius: 7,
+                          offset: Offset(0, 3), // changes position of shadow
+                        ),
+                      ],
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(20.r)),
                   child: Row(children: [
@@ -145,6 +175,14 @@ class ProfileScreen extends StatelessWidget {
                   margin: EdgeInsets.only(top: 20.h),
                   padding: EdgeInsets.symmetric(horizontal: 23.w),
                   decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          spreadRadius: 5,
+                          blurRadius: 7,
+                          offset: Offset(0, 3), // changes position of shadow
+                        ),
+                      ],
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(20.r)),
                   child: Row(children: [
@@ -169,6 +207,14 @@ class ProfileScreen extends StatelessWidget {
                   margin: EdgeInsets.only(top: 20.h),
                   padding: EdgeInsets.symmetric(horizontal: 23.w),
                   decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          spreadRadius: 5,
+                          blurRadius: 7,
+                          offset: Offset(0, 3), // changes position of shadow
+                        ),
+                      ],
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(20.r)),
                   child: Row(children: [
@@ -193,6 +239,14 @@ class ProfileScreen extends StatelessWidget {
                   margin: EdgeInsets.only(top: 20.h),
                   padding: EdgeInsets.symmetric(horizontal: 23.w),
                   decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          spreadRadius: 5,
+                          blurRadius: 7,
+                          offset: Offset(0, 3), // changes position of shadow
+                        ),
+                      ],
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(20.r)),
                   child: Row(children: [

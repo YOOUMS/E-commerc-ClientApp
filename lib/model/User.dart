@@ -6,6 +6,7 @@ class AppUser {
   String? userName;
   String? email;
   String? phone;
+  String? address;
   List<dynamic>? favorites = [];
   AppUser({
     required this.id,
@@ -20,6 +21,7 @@ class AppUser {
     email = json['email'];
     phone = json[phone];
     favorites = json['favorites'];
+    address = json['address'];
   }
 
   toMap() {
@@ -27,7 +29,8 @@ class AppUser {
       'userName': this.userName,
       'email': this.email,
       'phone': this.phone,
-      'favorites': this.favorites
+      'favorites': this.favorites,
+      'address': this.address
     };
   }
 }

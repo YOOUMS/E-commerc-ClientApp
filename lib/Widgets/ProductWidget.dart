@@ -21,7 +21,7 @@ class ProductWidget extends StatelessWidget {
       child: Container(
         margin: EdgeInsets.only(left: 50.w),
         // color: Colors.red,
-        height: 350.h,
+        height: 500.h,
         width: 220.w,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
@@ -31,10 +31,19 @@ class ProductWidget extends StatelessWidget {
                 Align(
                   child: Container(
                     padding: EdgeInsets.symmetric(horizontal: 10.w),
-                    margin: EdgeInsets.only(top: 50.h),
+                    margin: EdgeInsets.only(top: 30.h, bottom: 20.h),
                     width: 220.w,
                     height: 270.h,
                     decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 5,
+                            blurRadius: 10,
+                            offset: const Offset(
+                                0, 3), // changes position of shadow
+                          ),
+                        ],
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(20.r)),
                     child: Column(

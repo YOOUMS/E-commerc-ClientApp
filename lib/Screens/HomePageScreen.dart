@@ -1,7 +1,9 @@
 import 'package:e_commerce_app/Screens/DrawerScreen.dart';
+import 'package:e_commerce_app/Screens/ListViewProducts.dart';
 import 'package:e_commerce_app/data/dummyData.dart';
 import 'package:e_commerce_app/model/Product.dart';
 import 'package:e_commerce_app/providers/FireStoreProvider.dart';
+import 'package:e_commerce_app/providers/methodProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -26,11 +28,14 @@ class _HomePageScreenState extends State<HomePageScreen>
   void initState() {
     // TODO: implement initState
     super.initState();
-    _tabController = TabController(length: 7, vsync: this);
   }
 
   @override
   Widget build(BuildContext context) {
+    if (_tabController == null)
+      _tabController = TabController(
+          length: Provider.of<FireStoreProvider>(context).Tabs.length,
+          vsync: this);
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 229, 229, 229),
       resizeToAvoidBottomInset: false,
@@ -114,64 +119,64 @@ class _HomePageScreenState extends State<HomePageScreen>
                     indicatorColor: Color.fromARGB(255, 89, 86, 233),
                     unselectedLabelColor: Color.fromARGB(255, 154, 154, 157),
                     controller: _tabController,
-                    tabs: [
-                      Tab(
-                        text: "Wearable",
-                      ),
-                      Tab(
-                        text: "Laptops",
-                      ),
-                      Tab(
-                        text: "Phones",
-                      ),
-                      Tab(
-                        text: "Drones",
-                      ),
-                      Tab(
-                        text: "Drones",
-                      ),
-                      Tab(
-                        text: "Drones",
-                      ),
-                      Tab(
-                        text: "Wearable",
-                      )
-                    ],
+                    tabs: Provider.of<FireStoreProvider>(context).Tabs,
                   ),
                 ),
               ],
             ),
           ),
           Container(
-            margin: EdgeInsets.only(top: 67.h),
-            height: 320.h,
-            child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount:
-                    Provider.of<FireStoreProvider>(context).products.length,
-                itemBuilder: (context, index) => ProductWidget(
-                    product: Provider.of<FireStoreProvider>(context)
-                        .products[index])),
+            margin: EdgeInsets.only(top: 20.h),
+            height: 340.h,
+            child: TabBarView(controller: _tabController, children: [
+              ListViewProduct(
+                  products:
+                      Provider.of<FireStoreProvider>(context).WearableCategory),
+              ListViewProduct(
+                  products:
+                      Provider.of<FireStoreProvider>(context).PhoneCategory),
+              ListViewProduct(
+                  products:
+                      Provider.of<FireStoreProvider>(context).SoundCategory),
+              ListViewProduct(
+                  products:
+                      Provider.of<FireStoreProvider>(context).LaptopCategory)
+            ]),
           ),
-          TextButton(
-              onPressed: null,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Text(
-                    "see more",
-                    style: GoogleFonts.raleway(
-                        textStyle: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15.sp,
-                            color: Color.fromARGB(255, 89, 86, 233))),
-                  ),
-                  const Icon(
-                    Icons.arrow_forward,
-                    color: Color.fromARGB(255, 89, 86, 233),
-                  )
-                ],
-              ))
+          // Container(
+          //   margin: EdgeInsets.only(top: 40.h),
+          //   height: 340.h,
+          //   child: ListView.builder(
+          //       scrollDirection: Axis.horizontal,
+          //       itemCount:
+          //           Provider.of<FireStoreProvider>(context).products.length,
+          //       itemBuilder: (context, index) => ProductWidget(
+          //           product: Provider.of<FireStoreProvider>(context)
+          //               .products[index])),
+          // ),
+          SizedBox(
+            height: 80.h,
+          )
+
+          // TextButton(
+          //     onPressed: null,
+          //     child: Row(
+          //       mainAxisAlignment: MainAxisAlignment.end,
+          //       children: [
+          //         Text(
+          //           "see more",
+          //           style: GoogleFonts.raleway(
+          //               textStyle: TextStyle(
+          //                   fontWeight: FontWeight.bold,
+          //                   fontSize: 15.sp,
+          //                   color: Color.fromARGB(255, 89, 86, 233))),
+          //         ),
+          //         const Icon(
+          //           Icons.arrow_forward,
+          //           color: Color.fromARGB(255, 89, 86, 233),
+          //         )
+          //       ],
+          //     ))
         ])),
       ),
     );

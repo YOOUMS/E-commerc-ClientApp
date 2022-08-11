@@ -12,7 +12,6 @@ import 'package:flutter/cupertino.dart';
 class DBprovider extends ChangeNotifier {
   TextEditingController emailControllerLogin = TextEditingController();
   TextEditingController passwordControllerLogin = TextEditingController();
-
   TextEditingController emailControllerSignup = TextEditingController();
   TextEditingController passwordControllerSignup = TextEditingController();
   TextEditingController userNameControllerSignup = TextEditingController();
@@ -46,6 +45,7 @@ class DBprovider extends ChangeNotifier {
         email: userCredential.user!.email,
         userName: userNameControllerSignup.text,
         phone: phoneControllerSignup.text));
+    print(phoneControllerSignup.text);
     AppRouter.pushWidget(LoginScreen());
   }
 
