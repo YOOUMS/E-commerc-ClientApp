@@ -1,5 +1,8 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:ffi';
+
+import 'package:flutter/animation.dart';
 
 class AppUser {
   String? id;
@@ -7,21 +10,25 @@ class AppUser {
   String? email;
   String? phone;
   String? address;
+  String? imagePath;
   List<dynamic>? favorites = [];
-  AppUser({
-    required this.id,
-    required this.email,
-    required this.userName,
-    required this.phone,
-  });
+  List<dynamic>? basket = [];
+  AppUser(
+      {required this.id,
+      required this.email,
+      required this.userName,
+      required this.phone,
+      required this.imagePath});
 
   AppUser.fromJson(Map json) {
     id = json['id'];
     userName = json['userName'];
     email = json['email'];
-    phone = json[phone];
+    phone = json['phone'];
     favorites = json['favorites'];
+    basket = json['basket'];
     address = json['address'];
+    imagePath = json['imagePath'];
   }
 
   toMap() {
@@ -30,7 +37,9 @@ class AppUser {
       'email': this.email,
       'phone': this.phone,
       'favorites': this.favorites,
-      'address': this.address
+      'address': this.address,
+      'basket': this.basket,
+      'imagePath': this.imagePath
     };
   }
 }

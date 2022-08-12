@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/AppRouter/AppRouter.dart';
@@ -56,11 +57,19 @@ class FireStoreHelper {
     return userData!['favorites'];
   }
 
-  addToFavorites() async {
-    AppUser? user = await Provider.of<DBprovider>(
-            AppRouter.navKey.currentContext!,
-            listen: false)
-        .user;
+  readBasket(String userId) async {
+    DocumentSnapshot<Map<String, dynamic>> user =
+        await FirebaseFirestore.instance.collection('users').doc(userId).get();
+    Map<String, dynamic>? userData = user.data();
+
+    return userData!['basket'];
+  }
+
+  updateUser() async {
+    AppUser? user =
+        Provider.of<DBprovider>(AppRouter.navKey.currentContext!, listen: false)
+            .user;
+
     String userId = await Provider.of<DBprovider>(
             AppRouter.navKey.currentContext!,
             listen: false)
@@ -95,5 +104,13 @@ class FireStoreHelper {
     }).toList();
 
     return categories;
+  }
+
+  uplaodImage(File file) async {
+    String fileName = file.path.split('/').last;
+    Reference reference = FirebaseStorage.instance.ref(fileName);
+
+    await reference.putFile(file);
+    return await reference.getDownloadURL();
   }
 }

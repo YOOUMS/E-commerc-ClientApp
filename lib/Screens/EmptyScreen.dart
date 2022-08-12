@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/AppRouter/AppRouter.dart';
 import 'package:e_commerce_app/providers/DBprovider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,8 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+
+import 'HomePage.dart';
 
 class EmptyScreen extends StatelessWidget {
   const EmptyScreen({Key? key}) : super(key: key);
@@ -39,7 +42,7 @@ class EmptyScreen extends StatelessWidget {
           height: 29.h,
         ),
         InkWell(
-          onTap: () => Provider.of<DBprovider>(context, listen: false).signIn(),
+          onTap: () => AppRouter.pushWithReplacment(HomePage()),
           child: Container(
               width: 224.w,
               height: 50.h,

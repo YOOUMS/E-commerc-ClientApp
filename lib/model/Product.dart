@@ -6,6 +6,7 @@ class Product {
   late String categoryId;
   late int quantity;
   late int price;
+
   Product(
       {required this.name,
       required this.descraption,
@@ -20,6 +21,6 @@ class Product {
     this.price = json['price'];
     this.quantity = json['quantity'];
     this.categoryId = json['categoryId'];
-    this.imagePath = 'assets/products/p1.jpg';
+    this.imagePath = json['imagePath'];
   }
 }

@@ -35,12 +35,11 @@ class ProductInFavorite extends StatelessWidget {
           ),
         ], color: Colors.white, borderRadius: BorderRadius.circular(10.r)),
         child: Row(children: [
-          Image.asset(product.imagePath),
+          Image.network(product.imagePath),
           SizedBox(
             width: 9.w,
           ),
-          SizedBox(
-            width: 200.w,
+          Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

@@ -1,4 +1,7 @@
+import 'package:e_commerce_app/AppRouter/AppRouter.dart';
+import 'package:e_commerce_app/Screens/EditProfile.dart';
 import 'package:e_commerce_app/providers/DBprovider.dart';
+import 'package:e_commerce_app/providers/methodProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -38,14 +41,14 @@ class ProfileScreen extends StatelessWidget {
               ),
               Container(
                 child: SizedBox(
-                  height: 190.h,
+                  height: 300.h,
                   width: 315.w,
                   child: Stack(alignment: Alignment.topCenter, children: [
                     Container(
                       padding: EdgeInsets.symmetric(horizontal: 23.w),
                       margin: EdgeInsets.only(top: 23.h),
                       width: 315.w,
-                      height: 167.h,
+                      height: 500.h,
                       decoration: BoxDecoration(
                           boxShadow: [
                             BoxShadow(
@@ -89,6 +92,42 @@ class ProfileScreen extends StatelessWidget {
                                   : "Address: ${Provider.of<DBprovider>(context).user!.address}"),
                             )
                           ],
+                        ),
+                        Divider(),
+                        Row(
+                          children: [
+                            Icon(Icons.phone),
+                            SizedBox(
+                              width: 18.w,
+                            ),
+                            SizedBox(
+                              width: 182.w,
+                              child: Text(Provider.of<DBprovider>(context)
+                                          .user!
+                                          .phone ==
+                                      null
+                                  ? "No Phone Number Found \n Edit Your Profile"
+                                  : "${Provider.of<DBprovider>(context).user!.phone}"),
+                            )
+                          ],
+                        ),
+                        Divider(),
+                        Row(
+                          children: [
+                            Icon(Icons.email),
+                            SizedBox(
+                              width: 18.w,
+                            ),
+                            SizedBox(
+                              width: 182.w,
+                              child: Text(Provider.of<DBprovider>(context)
+                                          .user!
+                                          .email ==
+                                      null
+                                  ? "No Email Found \n Edit Your Profile"
+                                  : "${Provider.of<DBprovider>(context).user!.email}"),
+                            )
+                          ],
                         )
                       ])),
                     ),
@@ -98,7 +137,10 @@ class ProfileScreen extends StatelessWidget {
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(100.r),
                           image: DecorationImage(
-                              image: AssetImage('assets/user.jpg'),
+                              image: NetworkImage(
+                                  Provider.of<DBprovider>(context)
+                                      .user!
+                                      .imagePath!),
                               fit: BoxFit.cover)),
                     )
                   ]),
@@ -121,149 +163,28 @@ class ProfileScreen extends StatelessWidget {
                       ],
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(20.r)),
-                  child: Row(children: [
-                    Text(
-                      "Edit Profile",
-                      style: GoogleFonts.raleway(
-                          textStyle: TextStyle(
-                              fontSize: 18.sp, fontWeight: FontWeight.bold)),
-                    ),
-                    Spacer(),
-                    Icon(
-                      Icons.arrow_forward_ios_rounded,
-                      size: 24.w,
-                    )
-                  ]),
+                  child: InkWell(
+                    onTap: () {
+                      Provider.of<MethodProvider>(context, listen: false)
+                          .fillControllers();
+                      AppRouter.pushWidget(EditProfile());
+                    },
+                    child: Row(children: [
+                      Text(
+                        "Edit Profile",
+                        style: GoogleFonts.raleway(
+                            textStyle: TextStyle(
+                                fontSize: 18.sp, fontWeight: FontWeight.bold)),
+                      ),
+                      Spacer(),
+                      Icon(
+                        Icons.arrow_forward_ios_rounded,
+                        size: 24.w,
+                      )
+                    ]),
+                  ),
                 ),
               ),
-              InkWell(
-                child: Container(
-                  height: 60.h,
-                  width: 315.w,
-                  margin: EdgeInsets.only(top: 20.h),
-                  padding: EdgeInsets.symmetric(horizontal: 23.w),
-                  decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          spreadRadius: 5,
-                          blurRadius: 7,
-                          offset: Offset(0, 3), // changes position of shadow
-                        ),
-                      ],
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20.r)),
-                  child: Row(children: [
-                    Text(
-                      "Shopping address",
-                      style: GoogleFonts.raleway(
-                          textStyle: TextStyle(
-                              fontSize: 18.sp, fontWeight: FontWeight.bold)),
-                    ),
-                    Spacer(),
-                    Icon(
-                      Icons.arrow_forward_ios_rounded,
-                      size: 24.w,
-                    )
-                  ]),
-                ),
-              ),
-              InkWell(
-                child: Container(
-                  height: 60.h,
-                  width: 315.w,
-                  margin: EdgeInsets.only(top: 20.h),
-                  padding: EdgeInsets.symmetric(horizontal: 23.w),
-                  decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          spreadRadius: 5,
-                          blurRadius: 7,
-                          offset: Offset(0, 3), // changes position of shadow
-                        ),
-                      ],
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20.r)),
-                  child: Row(children: [
-                    Text(
-                      "Order history",
-                      style: GoogleFonts.raleway(
-                          textStyle: TextStyle(
-                              fontSize: 18.sp, fontWeight: FontWeight.bold)),
-                    ),
-                    Spacer(),
-                    Icon(
-                      Icons.arrow_forward_ios_rounded,
-                      size: 24.w,
-                    )
-                  ]),
-                ),
-              ),
-              InkWell(
-                child: Container(
-                  height: 60.h,
-                  width: 315.w,
-                  margin: EdgeInsets.only(top: 20.h),
-                  padding: EdgeInsets.symmetric(horizontal: 23.w),
-                  decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          spreadRadius: 5,
-                          blurRadius: 7,
-                          offset: Offset(0, 3), // changes position of shadow
-                        ),
-                      ],
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20.r)),
-                  child: Row(children: [
-                    Text(
-                      "Cards",
-                      style: GoogleFonts.raleway(
-                          textStyle: TextStyle(
-                              fontSize: 18.sp, fontWeight: FontWeight.bold)),
-                    ),
-                    Spacer(),
-                    Icon(
-                      Icons.arrow_forward_ios_rounded,
-                      size: 24.w,
-                    )
-                  ]),
-                ),
-              ),
-              InkWell(
-                child: Container(
-                  height: 60.h,
-                  width: 315.w,
-                  margin: EdgeInsets.only(top: 20.h),
-                  padding: EdgeInsets.symmetric(horizontal: 23.w),
-                  decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          spreadRadius: 5,
-                          blurRadius: 7,
-                          offset: Offset(0, 3), // changes position of shadow
-                        ),
-                      ],
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20.r)),
-                  child: Row(children: [
-                    Text(
-                      "Notifications",
-                      style: GoogleFonts.raleway(
-                          textStyle: TextStyle(
-                              fontSize: 18.sp, fontWeight: FontWeight.bold)),
-                    ),
-                    Spacer(),
-                    Icon(
-                      Icons.arrow_forward_ios_rounded,
-                      size: 24.w,
-                    )
-                  ]),
-                ),
-              )
             ],
           ),
         ),

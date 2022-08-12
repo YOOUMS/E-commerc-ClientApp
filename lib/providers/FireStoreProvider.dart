@@ -9,13 +9,14 @@ import 'package:e_commerce_app/providers/DBprovider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 class FireStoreProvider extends ChangeNotifier {
-  List<Product> products = [];
   List<dynamic> favorites = [];
   List<Product> favoriteProdcuts = [];
-  List<Product> categoires = [];
+  List<dynamic> basket = [];
+  List<Product> basketProducts = [];
   List<Product> WearableCategory = [];
   List<Product> PhoneCategory = [];
   List<Product> LaptopCategory = [];
@@ -34,45 +35,54 @@ class FireStoreProvider extends ChangeNotifier {
       text: "Laptops",
     ),
   ];
-  List<Widget> categoriesTab = [];
 
+  TextEditingController userNameController = TextEditingController();
+  TextEditingController emailNameController = TextEditingController();
+  TextEditingController phoneNameController = TextEditingController();
+  TextEditingController addressNameController = TextEditingController();
+
+  File? selectedImage;
   FireStoreProvider() {
-    // readCategories();
-    readProductsCategory();
-    fillFavorites();
+    fillData();
   }
+
+  fillData() async {
+    await fillFavorites();
+    await readProductsCategory();
+    await fillBasket();
+  }
+
   readProductsCategory() async {
     WearableCategory = await FireStoreHelper.instence
         .readCategoryProducts("NyC9FBzbJ34VeseCJLhj");
+    SoundCategory = await FireStoreHelper.instence
+        .readCategoryProducts("kDGWaYqtAXRJuHJ7rZRu");
     PhoneCategory = await FireStoreHelper.instence
         .readCategoryProducts("gmIjumIgeIeT7sP8r7JT");
     LaptopCategory = await FireStoreHelper.instence
         .readCategoryProducts("lUEeEurLtrzNlwbtfC4u");
-    SoundCategory = await FireStoreHelper.instence
-        .readCategoryProducts("kDGWaYqtAXRJuHJ7rZRu");
 
     notifyListeners();
   }
 
-  readCategories() async {
-    categoires = await FireStoreHelper.instence.getAllCategory();
+  // readCategories() async {
+  //   categoires = await FireStoreHelper.instence.getAllCategory();
 
-    categoriesTab = List.generate(
-      categoires.length,
-      (index) => Tab(
-        text: categoires[index].name,
-      ),
-    );
-    notifyListeners();
-  }
+  //   categoriesTab = List.generate(
+  //     categoires.length,
+  //     (index) => Tab(
+  //       text: categoires[index].name,
+  //     ),
+  //   );
+  //   notifyListeners();
+  // }
 
   addProductToFavorites(String productId) async {
-    await FireStoreHelper.instence.productById(productId);
     Provider.of<DBprovider>(AppRouter.navKey.currentContext!, listen: false)
         .user!
         .favorites!
         .add(productId);
-    await FireStoreHelper.instence.addToFavorites();
+    await FireStoreHelper.instence.updateUser();
     fillFavorites();
   }
 
@@ -81,7 +91,7 @@ class FireStoreProvider extends ChangeNotifier {
         .user!
         .favorites!
         .remove(productId);
-    await FireStoreHelper.instence.addToFavorites();
+    await FireStoreHelper.instence.updateUser();
     fillFavorites();
   }
 
@@ -98,11 +108,90 @@ class FireStoreProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  fillBasket() async {
+    basket = await FireStoreHelper.instence.readBasket(
+        await Provider.of<DBprovider>(AppRouter.navKey.currentContext!,
+                listen: false)
+            .getUserId());
+    basketProducts.clear();
+    basket.forEach((element) async {
+      basketProducts.add(await ProductById(element));
+    });
+
+    notifyListeners();
+  }
+
+  removeFromBasket(String productId) async {
+    Provider.of<DBprovider>(AppRouter.navKey.currentContext!, listen: false)
+        .user!
+        .basket!
+        .remove(productId);
+    await FireStoreHelper.instence.updateUser();
+    await fillBasket();
+  }
+
   checkFavorite(String productId) {
     return favorites.contains(productId);
   }
 
   ProductById(String productId) async {
     return await FireStoreHelper.instence.productById(productId);
+  }
+
+  addToBasket(String productId) async {
+    Provider.of<DBprovider>(AppRouter.navKey.currentContext!, listen: false)
+        .user!
+        .basket!
+        .add(productId);
+    await FireStoreHelper.instence.updateUser();
+    fillBasket();
+  }
+
+  updateUser() async {
+    Provider.of<DBprovider>(AppRouter.navKey.currentContext!, listen: false)
+        .user!
+        .userName = userNameController.text;
+    Provider.of<DBprovider>(AppRouter.navKey.currentContext!, listen: false)
+        .user!
+        .email = emailNameController.text;
+    Provider.of<DBprovider>(AppRouter.navKey.currentContext!, listen: false)
+        .user!
+        .phone = phoneNameController.text;
+    Provider.of<DBprovider>(AppRouter.navKey.currentContext!, listen: false)
+        .user!
+        .address = addressNameController.text;
+    Provider.of<DBprovider>(AppRouter.navKey.currentContext!, listen: false)
+        .user!
+        .imagePath = await updateImage();
+    await FireStoreHelper.instence.updateUser();
+    await Provider.of<DBprovider>(AppRouter.navKey.currentContext!,
+            listen: false)
+        .fillUser();
+
+    selectedImage = null;
+    notifyListeners();
+  }
+
+  updateImage() async {
+    if (selectedImage != null)
+      return await FireStoreHelper.instence.uplaodImage(selectedImage!);
+
+    return Provider.of<DBprovider>(AppRouter.navKey.currentContext!,
+            listen: false)
+        .user!
+        .imagePath;
+  }
+
+  fillSelectedImage(XFile file) {
+    selectedImage = File(file.path);
+    notifyListeners();
+  }
+
+  clearData() {
+    favorites.clear();
+    favoriteProdcuts.clear();
+    basket.clear();
+    basketProducts.clear();
+    notifyListeners();
   }
 }

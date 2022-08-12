@@ -6,8 +6,10 @@ import 'package:e_commerce_app/Screens/LoginScreen.dart';
 import 'package:e_commerce_app/Screens/SplachScreen.dart';
 import 'package:e_commerce_app/data/firestore_helper.dart';
 import 'package:e_commerce_app/model/User.dart';
+import 'package:e_commerce_app/providers/FireStoreProvider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
 
 class DBprovider extends ChangeNotifier {
   TextEditingController emailControllerLogin = TextEditingController();
@@ -17,13 +19,15 @@ class DBprovider extends ChangeNotifier {
   TextEditingController userNameControllerSignup = TextEditingController();
   TextEditingController phoneControllerSignup = TextEditingController();
   AppUser? user;
+  String imageUrl =
+      "https://firebasestorage.googleapis.com/v0/b/e-commrec-app.appspot.com/o/user.png?alt=media&token=dcb96c48-d0a3-4245-b42d-40ba4c3a5c36";
   DBprovider() {
     fillUser();
   }
   fillUser() async {
     var uid2 = await DBhelper.instance.getCurrentUserId();
     this.user = await FireStoreHelper.instence.readUserFromFireBase(uid2);
-    FireStoreHelper.instence.readCategoryProducts("NyC9FBzbJ34VeseCJLhj");
+
     notifyListeners();
   }
 
@@ -33,7 +37,9 @@ class DBprovider extends ChangeNotifier {
 
     var uid2 = await DBhelper.instance.getCurrentUserId();
     this.user = await FireStoreHelper.instence.readUserFromFireBase(uid2);
-
+    await Provider.of<FireStoreProvider>(AppRouter.navKey.currentContext!,
+            listen: false)
+        .fillData();
     notifyListeners();
   }
 
@@ -44,12 +50,16 @@ class DBprovider extends ChangeNotifier {
         id: userCredential.user!.uid,
         email: userCredential.user!.email,
         userName: userNameControllerSignup.text,
-        phone: phoneControllerSignup.text));
+        phone: phoneControllerSignup.text,
+        imagePath: imageUrl));
     print(phoneControllerSignup.text);
     AppRouter.pushWidget(LoginScreen());
   }
 
   signOut() {
+    Provider.of<FireStoreProvider>(AppRouter.navKey.currentContext!,
+            listen: false)
+        .clearData();
     DBhelper.instance.signOut();
   }
 

@@ -49,38 +49,14 @@ class ProductPage extends StatelessWidget {
             children: [
               SizedBox(
                 height: 270.h,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: [
-                    Container(
-                      margin: EdgeInsets.symmetric(horizontal: 30.w),
-                      height: 230.h,
-                      width: 260.w,
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image: AssetImage("assets/products/p2.jpg"),
-                              fit: BoxFit.cover)),
-                    ),
-                    Container(
-                      margin: EdgeInsets.symmetric(horizontal: 30.w),
-                      height: 230.h,
-                      width: 260.w,
-                      decoration: BoxDecoration(
-                          color: Colors.black.withOpacity(1),
-                          image: DecorationImage(
-                              image: AssetImage("assets/products/p1.jpg"),
-                              fit: BoxFit.cover)),
-                    ),
-                    Container(
-                      margin: EdgeInsets.symmetric(horizontal: 30.w),
-                      height: 230.h,
-                      width: 260.w,
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image: AssetImage("assets/products/p3.jpg"),
-                              fit: BoxFit.cover)),
-                    )
-                  ],
+                child: Container(
+                  margin: EdgeInsets.symmetric(horizontal: 30.w),
+                  height: 230.h,
+                  width: 260.w,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: NetworkImage(product.imagePath),
+                          fit: BoxFit.cover)),
                 ),
               ),
               SizedBox(
@@ -151,9 +127,9 @@ class ProductPage extends StatelessWidget {
                         height: 33.h,
                       ),
                       InkWell(
-                        onTap: () =>
-                            Provider.of<DBprovider>(context, listen: false)
-                                .signIn(),
+                        onTap: () => Provider.of<FireStoreProvider>(context,
+                                listen: false)
+                            .addToBasket(product.id!),
                         child: Container(
                             width: 314.w,
                             height: 70.h,
