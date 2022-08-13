@@ -19,139 +19,136 @@ class ProductPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          elevation: 0,
-          backgroundColor: Color.fromARGB(255, 229, 229, 229),
-          actions: [
-            IconButton(
-              onPressed: () {
-                Provider.of<MethodProvider>(context, listen: false)
-                        .CheckFavoriteState(product.id!)
-                    ? Provider.of<FireStoreProvider>(context, listen: false)
-                        .removeFromFavorites(product.id!)
-                    : Provider.of<FireStoreProvider>(context, listen: false)
-                        .addProductToFavorites(product.id!);
-              },
-              icon: Icon(Icons.favorite_rounded),
-              color: Provider.of<FireStoreProvider>(context)
-                      .checkFavorite(product.id!)
-                  ? Colors.red
-                  : Colors.black,
-            )
-          ],
-        ),
-        resizeToAvoidBottomInset: false,
-        backgroundColor: Color.fromARGB(255, 229, 229, 229),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              SizedBox(
-                height: 270.h,
-                child: Container(
-                  margin: EdgeInsets.symmetric(horizontal: 30.w),
-                  height: 230.h,
-                  width: 260.w,
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: NetworkImage(product.imagePath),
-                          fit: BoxFit.cover)),
-                ),
-              ),
-              SizedBox(
-                height: 20.h,
-              ),
-              Form(
-                child: Container(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 50.w, vertical: 36.h),
-                  width: 414.w,
-                  height: 503.h,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(30.r),
-                          topRight: Radius.circular(30.r))),
-                  child: Align(
-                    child: Column(children: [
-                      SizedBox(
-                          width: double.infinity,
-                          child: Text(
-                            "${product.name}",
-                            style: GoogleFonts.raleway(
-                                textStyle: TextStyle(
-                                    fontSize: 28.sp,
-                                    fontWeight: FontWeight.bold)),
-                          )),
-                      SizedBox(
-                        height: 40.h,
-                      ),
-                      SizedBox(
-                          width: double.infinity,
-                          child: Text(
-                            "Description",
-                            style: GoogleFonts.raleway(
-                                textStyle:
-                                    TextStyle(fontWeight: FontWeight.bold)),
-                          )),
-                      Divider(),
-                      SizedBox(
-                        width: double.infinity,
-                        child: Text(
-                          "${product.descraption}",
-                          style: GoogleFonts.raleway(
-                              textStyle: TextStyle(fontSize: 15.sp)),
-                          textAlign: TextAlign.left,
-                        ),
-                      ),
-                      Spacer(),
-                      Row(
-                        children: [
-                          Text(
-                            "Total",
-                            style: GoogleFonts.raleway(fontSize: 17.sp),
-                          ),
-                          Spacer(),
-                          Text(
-                            "\$ ${product.price}",
-                            style: GoogleFonts.raleway(
-                                textStyle: TextStyle(
-                                    color: Color.fromARGB(255, 89, 86, 233),
-                                    fontSize: 22.sp,
-                                    fontWeight: FontWeight.bold)),
-                          )
-                        ],
-                      ),
-                      SizedBox(
-                        height: 33.h,
-                      ),
-                      InkWell(
-                        onTap: () => Provider.of<FireStoreProvider>(context,
-                                listen: false)
-                            .addToBasket(product.id!),
-                        child: Container(
-                            width: 314.w,
-                            height: 70.h,
-                            decoration: BoxDecoration(
-                                color: Color.fromARGB(255, 89, 86, 233),
-                                borderRadius: BorderRadius.circular(10.r)),
-                            child: Align(
-                                alignment: Alignment.center,
-                                child: Text(
-                                  "Add to basket",
-                                  style: TextStyle(
-                                      fontSize: 20.sp,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white),
-                                ))),
-                      ),
-                    ]),
-                  ),
-                ),
+    return Consumer<FireStoreProvider>(builder: (context, provider, x) {
+      return Scaffold(
+          appBar: AppBar(
+            elevation: 0,
+            backgroundColor: Color.fromARGB(255, 229, 229, 229),
+            actions: [
+              IconButton(
+                onPressed: () {
+                  Provider.of<MethodProvider>(context, listen: false)
+                          .CheckFavoriteState(product.id!)
+                      ? provider.removeFromFavorites(product.id!)
+                      : provider.addProductToFavorites(product.id!);
+                },
+                icon: Icon(Icons.favorite_rounded),
+                color: provider.checkFavorite(product.id!)
+                    ? Colors.red
+                    : Colors.black,
               )
             ],
           ),
-        ));
+          resizeToAvoidBottomInset: false,
+          backgroundColor: Color.fromARGB(255, 229, 229, 229),
+          body: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                SizedBox(
+                  height: 270.h,
+                  child: Container(
+                    margin: EdgeInsets.symmetric(horizontal: 30.w),
+                    height: 230.h,
+                    width: 260.w,
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: NetworkImage(product.imagePath),
+                            fit: BoxFit.cover)),
+                  ),
+                ),
+                SizedBox(
+                  height: 20.h,
+                ),
+                Form(
+                  child: Container(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 50.w, vertical: 36.h),
+                    width: 414.w,
+                    height: 503.h,
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(30.r),
+                            topRight: Radius.circular(30.r))),
+                    child: Align(
+                      child: Column(children: [
+                        SizedBox(
+                            width: double.infinity,
+                            child: Text(
+                              "${product.name}",
+                              style: GoogleFonts.raleway(
+                                  textStyle: TextStyle(
+                                      fontSize: 28.sp,
+                                      fontWeight: FontWeight.bold)),
+                            )),
+                        SizedBox(
+                          height: 40.h,
+                        ),
+                        SizedBox(
+                            width: double.infinity,
+                            child: Text(
+                              "Description",
+                              style: GoogleFonts.raleway(
+                                  textStyle:
+                                      TextStyle(fontWeight: FontWeight.bold)),
+                            )),
+                        Divider(),
+                        SizedBox(
+                          width: double.infinity,
+                          child: Text(
+                            "${product.descraption}",
+                            style: GoogleFonts.raleway(
+                                textStyle: TextStyle(fontSize: 15.sp)),
+                            textAlign: TextAlign.left,
+                          ),
+                        ),
+                        Spacer(),
+                        Row(
+                          children: [
+                            Text(
+                              "Total",
+                              style: GoogleFonts.raleway(fontSize: 17.sp),
+                            ),
+                            Spacer(),
+                            Text(
+                              "\$ ${product.price}",
+                              style: GoogleFonts.raleway(
+                                  textStyle: TextStyle(
+                                      color: Color.fromARGB(255, 89, 86, 233),
+                                      fontSize: 22.sp,
+                                      fontWeight: FontWeight.bold)),
+                            )
+                          ],
+                        ),
+                        SizedBox(
+                          height: 33.h,
+                        ),
+                        InkWell(
+                          onTap: () => provider.addToBasket(product.id!),
+                          child: Container(
+                              width: 314.w,
+                              height: 70.h,
+                              decoration: BoxDecoration(
+                                  color: Color.fromARGB(255, 89, 86, 233),
+                                  borderRadius: BorderRadius.circular(10.r)),
+                              child: Align(
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    "Add to basket",
+                                    style: TextStyle(
+                                        fontSize: 20.sp,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white),
+                                  ))),
+                        ),
+                      ]),
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ));
+    });
   }
 }

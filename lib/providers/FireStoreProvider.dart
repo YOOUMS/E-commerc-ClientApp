@@ -109,10 +109,13 @@ class FireStoreProvider extends ChangeNotifier {
   }
 
   fillBasket() async {
-    basket = await FireStoreHelper.instence.readBasket(
-        await Provider.of<DBprovider>(AppRouter.navKey.currentContext!,
-                listen: false)
-            .getUserId());
+    String userId = await Provider.of<DBprovider>(
+            AppRouter.navKey.currentContext!,
+            listen: false)
+        .getUserId();
+
+    basket = await FireStoreHelper.instence.readBasket(userId);
+
     basketProducts.clear();
     basket.forEach((element) async {
       basketProducts.add(await ProductById(element));
@@ -122,7 +125,8 @@ class FireStoreProvider extends ChangeNotifier {
   }
 
   removeFromBasket(String productId) async {
-    Provider.of<DBprovider>(AppRouter.navKey.currentContext!, listen: false)
+    await Provider.of<DBprovider>(AppRouter.navKey.currentContext!,
+            listen: false)
         .user!
         .basket!
         .remove(productId);

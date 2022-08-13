@@ -70,7 +70,8 @@ class ProductInBasket extends StatelessWidget {
               ),
             ),
             IconButton(
-                onPressed: () => provider.removeFromBasket(product.id!),
+                onPressed: () async =>
+                    await provider.removeFromBasket(product.id!),
                 icon: Icon(
                   Icons.delete_outline_outlined,
                   color: Colors.red,

@@ -52,12 +52,16 @@ class ProductWidget extends StatelessWidget {
                           SizedBox(
                             height: 160.h,
                           ),
-                          Text(
-                            product.name,
-                            style: GoogleFonts.raleway(
-                                textStyle: TextStyle(
-                                    fontSize: 22.sp,
-                                    fontWeight: FontWeight.bold)),
+                          SizedBox(
+                            width: double.infinity,
+                            child: Text(
+                              product.name,
+                              style: GoogleFonts.raleway(
+                                  textStyle: TextStyle(
+                                      fontSize: 22.sp,
+                                      fontWeight: FontWeight.bold)),
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
                           SizedBox(
                             height: 9.h,

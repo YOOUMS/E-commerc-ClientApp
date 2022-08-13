@@ -15,35 +15,34 @@ class FavoritesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color.fromARGB(255, 229, 229, 229),
-      appBar: AppBar(
-        elevation: 0,
+    return Consumer<FireStoreProvider>(builder: (context, provider, x) {
+      return Scaffold(
         backgroundColor: Color.fromARGB(255, 229, 229, 229),
-        title: Text(
-          "Favorites",
-          style: GoogleFonts.raleway(
-              textStyle: TextStyle(
-                  fontSize: 18.sp,
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold)),
+        appBar: AppBar(
+          elevation: 0,
+          backgroundColor: Color.fromARGB(255, 229, 229, 229),
+          title: Text(
+            "Favorites",
+            style: GoogleFonts.raleway(
+                textStyle: TextStyle(
+                    fontSize: 18.sp,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold)),
+          ),
+          centerTitle: true,
         ),
-        centerTitle: true,
-      ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 30.w),
-        child: Provider.of<FireStoreProvider>(context).favorites.isEmpty
-            ? EmptyScreen()
-            : ListView.builder(
-                itemCount: Provider.of<FireStoreProvider>(context)
-                    .favoriteProdcuts
-                    .length,
-                itemBuilder: (context, index) {
-                  return ProductInFavorite(
-                      product: Provider.of<FireStoreProvider>(context)
-                          .favoriteProdcuts[index] as Product);
-                }),
-      ),
-    );
+        body: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 30.w),
+          child: provider.favorites.isEmpty
+              ? EmptyScreen()
+              : ListView.builder(
+                  itemCount: provider.favoriteProdcuts.length,
+                  itemBuilder: (context, index) {
+                    return ProductInFavorite(
+                        product: provider.favoriteProdcuts[index] as Product);
+                  }),
+        ),
+      );
+    });
   }
 }

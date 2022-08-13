@@ -79,106 +79,71 @@ class _HomePageScreenState extends State<HomePageScreen>
           ),
         ),
       ),
-      body: Padding(
-        padding: EdgeInsets.only(left: 0.w),
-        child: Center(
-            child:
-                Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          Padding(
-            padding: EdgeInsets.only(left: 50.w),
-            child: Align(
-              alignment: Alignment.topLeft,
-              child: SizedBox(
-                width: 243.w,
-                child: Text(
-                  "Order online collect in store",
-                  style: GoogleFonts.raleway(
-                      textStyle: TextStyle(
-                    fontSize: 34.sp,
-                    fontWeight: FontWeight.bold,
-                  )),
-                ),
-              ),
-            ),
-          ),
-          SizedBox(
-            height: 56.h,
-          ),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: [
-                SizedBox(
-                  width: 50.w,
-                ),
-                SizedBox(
-                  height: 33.h,
-                  child: TabBar(
-                    isScrollable: true,
-                    labelColor: Color.fromARGB(255, 89, 86, 233),
-                    indicatorColor: Color.fromARGB(255, 89, 86, 233),
-                    unselectedLabelColor: Color.fromARGB(255, 154, 154, 157),
-                    controller: _tabController,
-                    tabs: Provider.of<FireStoreProvider>(context).Tabs,
+      body: Consumer<FireStoreProvider>(builder: (context, provider, x) {
+        return Padding(
+          padding: EdgeInsets.only(left: 0.w),
+          child: Center(
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                Padding(
+                  padding: EdgeInsets.only(left: 50.w),
+                  child: Align(
+                    alignment: Alignment.topLeft,
+                    child: SizedBox(
+                      width: 243.w,
+                      child: Text(
+                        "Order online collect in store",
+                        style: GoogleFonts.raleway(
+                            textStyle: TextStyle(
+                          fontSize: 34.sp,
+                          fontWeight: FontWeight.bold,
+                        )),
+                      ),
+                    ),
                   ),
                 ),
-              ],
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.only(top: 20.h),
-            height: 340.h,
-            child: TabBarView(controller: _tabController, children: [
-              ListViewProduct(
-                  products:
-                      Provider.of<FireStoreProvider>(context).WearableCategory),
-              ListViewProduct(
-                  products:
-                      Provider.of<FireStoreProvider>(context).PhoneCategory),
-              ListViewProduct(
-                  products:
-                      Provider.of<FireStoreProvider>(context).SoundCategory),
-              ListViewProduct(
-                  products:
-                      Provider.of<FireStoreProvider>(context).LaptopCategory)
-            ]),
-          ),
-          // Container(
-          //   margin: EdgeInsets.only(top: 40.h),
-          //   height: 340.h,
-          //   child: ListView.builder(
-          //       scrollDirection: Axis.horizontal,
-          //       itemCount:
-          //           Provider.of<FireStoreProvider>(context).products.length,
-          //       itemBuilder: (context, index) => ProductWidget(
-          //           product: Provider.of<FireStoreProvider>(context)
-          //               .products[index])),
-          // ),
-          SizedBox(
-            height: 80.h,
-          )
-
-          // TextButton(
-          //     onPressed: null,
-          //     child: Row(
-          //       mainAxisAlignment: MainAxisAlignment.end,
-          //       children: [
-          //         Text(
-          //           "see more",
-          //           style: GoogleFonts.raleway(
-          //               textStyle: TextStyle(
-          //                   fontWeight: FontWeight.bold,
-          //                   fontSize: 15.sp,
-          //                   color: Color.fromARGB(255, 89, 86, 233))),
-          //         ),
-          //         const Icon(
-          //           Icons.arrow_forward,
-          //           color: Color.fromARGB(255, 89, 86, 233),
-          //         )
-          //       ],
-          //     ))
-        ])),
-      ),
+                SizedBox(
+                  height: 56.h,
+                ),
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      SizedBox(
+                        width: 50.w,
+                      ),
+                      SizedBox(
+                        height: 33.h,
+                        child: TabBar(
+                          isScrollable: true,
+                          labelColor: Color.fromARGB(255, 89, 86, 233),
+                          indicatorColor: Color.fromARGB(255, 89, 86, 233),
+                          unselectedLabelColor:
+                              Color.fromARGB(255, 154, 154, 157),
+                          controller: _tabController,
+                          tabs: provider.Tabs,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(top: 20.h),
+                  height: 340.h,
+                  child: TabBarView(controller: _tabController, children: [
+                    ListViewProduct(products: provider.WearableCategory),
+                    ListViewProduct(products: provider.PhoneCategory),
+                    ListViewProduct(products: provider.SoundCategory),
+                    ListViewProduct(products: provider.LaptopCategory)
+                  ]),
+                ),
+                SizedBox(
+                  height: 80.h,
+                )
+              ])),
+        );
+      }),
     );
   }
 }
