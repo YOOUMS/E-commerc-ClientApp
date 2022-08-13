@@ -1,4 +1,5 @@
 import 'package:e_commerce_app/AppRouter/AppRouter.dart';
+import 'package:e_commerce_app/Screens/BasketScreen.dart';
 import 'package:e_commerce_app/Screens/FavoritesScreen.dart';
 import 'package:e_commerce_app/Screens/OrderHistory.dart';
 import 'package:e_commerce_app/Screens/ProfileScreen.dart';
@@ -23,7 +24,13 @@ class DrawerScreen extends StatelessWidget {
             UserAccountsDrawerHeader(
               decoration: (BoxDecoration(color: Colors.white.withOpacity(0))),
               currentAccountPicture: CircleAvatar(
-                child: Icon(Icons.perm_identity),
+                child: Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(100.r),
+                        image: DecorationImage(
+                            image: NetworkImage(Provider.of<DBprovider>(context)
+                                .user!
+                                .imagePath!)))),
               ),
               accountEmail: Text(Provider.of<DBprovider>(context).user!.email!),
               accountName:
@@ -59,7 +66,7 @@ class DrawerScreen extends StatelessWidget {
               ),
             ),
             ListTile(
-              onTap: () => AppRouter.pushWidget(OrderHistory()),
+              onTap: () => AppRouter.pushWidget(BasketScreen()),
               leading: Icon(
                 Icons.shopping_bag_outlined,
                 size: 24,
@@ -68,7 +75,7 @@ class DrawerScreen extends StatelessWidget {
               title: Align(
                 alignment: Alignment.topLeft,
                 child: Text(
-                  "My orders",
+                  "Basket",
                   style: GoogleFonts.raleway(
                       textStyle: TextStyle(
                           fontSize: 17.sp,
@@ -109,32 +116,7 @@ class DrawerScreen extends StatelessWidget {
                 thickness: 0.3.h,
               ),
             ),
-            ListTile(
-              leading:
-                  Icon(Icons.settings_outlined, size: 24, color: Colors.white),
-              title: Align(
-                alignment: Alignment.topLeft,
-                child: Text(
-                  "Settings",
-                  style: GoogleFonts.raleway(
-                      textStyle: TextStyle(
-                          fontSize: 17.sp,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white)),
-                ),
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(left: 74.w),
-              child: Divider(
-                endIndent: 132.w,
-                color: Colors.white,
-                thickness: 0.3.h,
-              ),
-            ),
-            SizedBox(
-              height: 200.h,
-            ),
+            Spacer(),
             ListTile(
               onTap: () =>
                   Provider.of<DBprovider>(context, listen: false).signOut(),
