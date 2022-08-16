@@ -131,7 +131,10 @@ class FireStoreProvider extends ChangeNotifier {
         .basket!
         .remove(productId);
     await FireStoreHelper.instence.updateUser();
-    await fillBasket();
+    basketProducts.removeWhere((element) {
+      return element.id == productId;
+    });
+    notifyListeners();
   }
 
   checkFavorite(String productId) {

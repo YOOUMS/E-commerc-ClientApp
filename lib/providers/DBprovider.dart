@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:e_commerce_app/AppRouter/AppRouter.dart';
 import 'package:e_commerce_app/DBHelper/Dbhelper.dart';
 import 'package:e_commerce_app/SPHelper/SPHelper.dart';
@@ -12,6 +14,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 
 class DBprovider extends ChangeNotifier {
+  final GlobalKey<FormState> signUpKey = GlobalKey<FormState>();
+
   TextEditingController emailControllerLogin = TextEditingController();
   TextEditingController passwordControllerLogin = TextEditingController();
   TextEditingController emailControllerSignup = TextEditingController();
@@ -44,16 +48,18 @@ class DBprovider extends ChangeNotifier {
   }
 
   signUp() async {
-    UserCredential userCredential = await DBhelper.instance
-        .singUp(emailControllerSignup.text, passwordControllerSignup.text);
-    FireStoreHelper.instence.addUserToFireBase(AppUser(
-        id: userCredential.user!.uid,
-        email: userCredential.user!.email,
-        userName: userNameControllerSignup.text,
-        phone: phoneControllerSignup.text,
-        imagePath: imageUrl));
-    print(phoneControllerSignup.text);
-    AppRouter.pushWidget(LoginScreen());
+    if (signUpKey.currentState!.validate()) {
+      UserCredential userCredential = await DBhelper.instance
+          .singUp(emailControllerSignup.text, passwordControllerSignup.text);
+      FireStoreHelper.instence.addUserToFireBase(AppUser(
+          id: userCredential.user!.uid,
+          email: userCredential.user!.email,
+          userName: userNameControllerSignup.text,
+          phone: phoneControllerSignup.text,
+          imagePath: imageUrl));
+      print(phoneControllerSignup.text);
+      AppRouter.pushWidget(LoginScreen());
+    }
   }
 
   signOut() {
@@ -93,4 +99,32 @@ class DBprovider extends ChangeNotifier {
   getUserId() async {
     return await DBhelper.instance.getCurrentUserId();
   }
+
+  emptyValidate(var value) {
+    print("-----------------------" + value);
+    print(value == null);
+    print(value == '');
+    if (value == null || value == '') {
+      return 'This failed is required';
+    }
+  }
+
+  emailValidate(String value) {
+    emptyValidate(value);
+
+    if (!value.contains('@') && !value.contains('.com')) return "Invalid value";
+  }
+
+  userNameValid(String value) {
+    emptyValidate(value);
+    if (value.length <= 3) return "User name can't be less then 3";
+  }
+
+  passwordValid(String value) {
+    emptyValidate(value);
+
+    if (value.length <= 5) return "User name can't be less then 6";
+  }
+
+  signUpValidate() {}
 }

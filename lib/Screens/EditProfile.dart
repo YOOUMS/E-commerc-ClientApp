@@ -58,6 +58,7 @@ class EditProfile extends StatelessWidget {
                   SizedBox(width: 120.w, child: Text('Email')),
                   Expanded(
                       child: TextFormField(
+                    keyboardType: TextInputType.emailAddress,
                     controller: provider.emailNameController,
                   ))
                 ],
@@ -70,6 +71,7 @@ class EditProfile extends StatelessWidget {
                   SizedBox(width: 120.w, child: Text('Phone Number')),
                   Expanded(
                       child: TextFormField(
+                    keyboardType: TextInputType.numberWithOptions(),
                     controller: provider.phoneNameController,
                   ))
                 ],
