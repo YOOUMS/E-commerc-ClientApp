@@ -13,6 +13,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 class FireStoreProvider extends ChangeNotifier {
+  bool loading = true;
   List<dynamic> favorites = [];
   List<Product> favoriteProdcuts = [];
   List<dynamic> basket = [];
@@ -155,6 +156,7 @@ class FireStoreProvider extends ChangeNotifier {
   }
 
   updateUser() async {
+    chagneLoading();
     Provider.of<DBprovider>(AppRouter.navKey.currentContext!, listen: false)
         .user!
         .userName = userNameController.text;
@@ -176,6 +178,7 @@ class FireStoreProvider extends ChangeNotifier {
         .fillUser();
 
     selectedImage = null;
+    chagneLoading();
     notifyListeners();
   }
 
@@ -199,6 +202,11 @@ class FireStoreProvider extends ChangeNotifier {
     favoriteProdcuts.clear();
     basket.clear();
     basketProducts.clear();
+    notifyListeners();
+  }
+
+  chagneLoading() {
+    loading = !loading;
     notifyListeners();
   }
 }
