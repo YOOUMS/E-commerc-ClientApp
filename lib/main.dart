@@ -1,7 +1,4 @@
 import 'package:e_commerce_app/AppRouter/AppRouter.dart';
-import 'package:e_commerce_app/Screens/HomePage.dart';
-import 'package:e_commerce_app/Screens/LoginScreen.dart';
-import 'package:e_commerce_app/Screens/SplachScreen.dart';
 import 'package:e_commerce_app/providers/methodProvider.dart';
 import 'package:e_commerce_app/providers/DBprovider.dart';
 import 'package:e_commerce_app/providers/FireStoreProvider.dart';
