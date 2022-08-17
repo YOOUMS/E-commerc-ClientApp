@@ -14,6 +14,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 
 class DBprovider extends ChangeNotifier {
+  bool isLoaded = true;
   final GlobalKey<FormState> signUpKey = GlobalKey<FormState>();
 
   TextEditingController emailControllerLogin = TextEditingController();
@@ -36,6 +37,7 @@ class DBprovider extends ChangeNotifier {
   }
 
   signIn() async {
+    changeLoading();
     await DBhelper.instance
         .signIn(emailControllerLogin.text, passwordControllerLogin.text);
 
@@ -44,11 +46,13 @@ class DBprovider extends ChangeNotifier {
     await Provider.of<FireStoreProvider>(AppRouter.navKey.currentContext!,
             listen: false)
         .fillData();
+    changeLoading();
     notifyListeners();
   }
 
   signUp() async {
     if (signUpKey.currentState!.validate()) {
+      changeLoading();
       UserCredential userCredential = await DBhelper.instance
           .singUp(emailControllerSignup.text, passwordControllerSignup.text);
       FireStoreHelper.instence.addUserToFireBase(AppUser(
@@ -57,7 +61,9 @@ class DBprovider extends ChangeNotifier {
           userName: userNameControllerSignup.text,
           phone: phoneControllerSignup.text,
           imagePath: imageUrl));
-      print(phoneControllerSignup.text);
+
+      changeLoading();
+
       AppRouter.pushWidget(LoginScreen());
     }
   }
@@ -124,6 +130,11 @@ class DBprovider extends ChangeNotifier {
     emptyValidate(value);
 
     if (value.length <= 5) return "User name can't be less then 6";
+  }
+
+  changeLoading() {
+    isLoaded = !isLoaded;
+    notifyListeners();
   }
 
   signUpValidate() {}
