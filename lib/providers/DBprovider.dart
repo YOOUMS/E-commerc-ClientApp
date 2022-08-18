@@ -89,7 +89,7 @@ class DBprovider extends ChangeNotifier {
 
   checkAppUser() {
     bool? res = SPHelper.readNewUser();
-    print(res);
+
     if (res == null) {
       SPHelper.newUserToOldUser();
       return SplachScreen();
@@ -107,9 +107,6 @@ class DBprovider extends ChangeNotifier {
   }
 
   emptyValidate(var value) {
-    print("-----------------------" + value);
-    print(value == null);
-    print(value == '');
     if (value == null || value == '') {
       return 'This failed is required';
     }
@@ -136,6 +133,4 @@ class DBprovider extends ChangeNotifier {
     isLoaded = !isLoaded;
     notifyListeners();
   }
-
-  signUpValidate() {}
 }
