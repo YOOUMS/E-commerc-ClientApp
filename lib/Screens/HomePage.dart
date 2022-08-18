@@ -62,7 +62,7 @@ class _HomePageState extends State<HomePage>
             items: const [
               BottomNavigationBarItem(
                   backgroundColor: Color.fromARGB(255, 229, 229, 229),
-                  icon: Icon(Icons.home),
+                  icon: Icon(Icons.home_outlined),
                   label: ''),
               BottomNavigationBarItem(
                   backgroundColor: Color.fromARGB(255, 229, 229, 229),
